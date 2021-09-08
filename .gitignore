@@ -1,3 +1,10 @@
+# VowMUD specific
+db/
+documentation/
+game_modules/
+logs/*log
+test.py
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
