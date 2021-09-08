@@ -1,7 +1,7 @@
 import asyncio
 from core.authorization import AuthStateMachine, UserAuthPackage
-from core.logger_manager import logger_manager
-from core.manager_hub import manager_hub
+from core.managers.logger_manager import logger_manager
+from core.managers.manager_hub import manager_hub
 from core.user import create_user, User
 
 # async def start_server(manager_hub: ManagerHub) -> None:

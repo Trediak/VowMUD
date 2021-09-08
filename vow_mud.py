@@ -1,4 +1,4 @@
-from core.logger_manager import logger_manager
+from core.managers.logger_manager import logger_manager
 from core.maps import Map
 from core.server import start_server
 import asyncio

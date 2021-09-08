@@ -24,8 +24,8 @@ from typing import TYPE_CHECKING
 import re
 import bcrypt
 from core.database import query_table, insert_user_account
-from core.logger_manager import logger_manager
-from core.manager_hub import manager_hub
+from core.managers.logger_manager import logger_manager
+from core.managers.manager_hub import manager_hub
 from core.text_blocks import get_block
 
 if TYPE_CHECKING:
