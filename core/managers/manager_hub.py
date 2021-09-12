@@ -1,4 +1,4 @@
-from core.user_manager import UserManager
+from core.managers.user_manager import UserManager
 
 class ManagerHub:
     def __init__(self):
