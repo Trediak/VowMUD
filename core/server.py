@@ -4,6 +4,8 @@ from core.managers.logger_manager import logger_manager
 from core.managers.manager_hub import manager_hub
 from core.processors.command_processor import command_processor
 from core.user import create_user, User
+from core.templates import get_template
+from core.world import world_map
 
 # async def start_server(manager_hub: ManagerHub) -> None:
 async def start_server() -> None:
@@ -35,6 +37,16 @@ async def handle_connection(reader: asyncio.StreamReader, writer: asyncio.Stream
     # if user is authorized enter the main input read loop
     if user.is_authorized():
         user_input = None
+
+        # TODO: temporarily here until character creation and associated load-in has been written
+        # load the room player is in
+        user.socket.write((await get_template('game', 'room') % (
+            world_map.areas[user.current_area].rooms[user.current_room].name,
+            world_map.areas[user.current_area].rooms[user.current_room].description,
+            'North, South',
+            'Wicked Cultist, Ferocious Wolf, Small Baboon'
+        )).encode('ascii'))
+        await user.socket.drain()
 
         # loop forever or until connection is detected as disconnected or closed by server
         while user_input != b'':
