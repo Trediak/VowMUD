@@ -53,7 +53,7 @@ class ChatProcessor(ProcessorBase):
         await self.__queue.put((user, command))
 
     async def run(self) -> int:
-        """Start the command processor. Initialize queue and loop, processing commands in queue until shutdown initiated.
+        """Start the chat processor. Initialize queue and loop, processing commands in queue until shutdown initiated.
 
         Returns
         -------
@@ -68,10 +68,10 @@ class ChatProcessor(ProcessorBase):
             # unpack message from queue
             user, message = await self._consume()
 
-            # separates command to [0] and remainder of message to [2]
-            command = message.partition(' ')
+            # separates command from remainder of message
+            command, _, payload = message.partition(' ')
 
-            await self._route_chat(user, command[0], command[2])
+            await self._route_chat(user, command, payload)
 
         # zero is a "good" return code
         return 0

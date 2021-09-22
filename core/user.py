@@ -5,9 +5,15 @@ from dataclasses import dataclass, field
 class User:
     """Class which represents a user"""
     socket: StreamWriter = field(default_factory=StreamWriter)
-    account_name: str = ""
-    remote_address: str = ""
+    account_name: str = ''
+    remote_address: str = ''
     authorized: bool = False
+    current_area: str = ''
+    current_room: int = None           # TODO: move this to character at some point
+
+    def __post_init__(self):
+        self.current_area = 'test'
+        self.current_room = 1
 
     def is_authorized(self) -> bool:
         """Return True if user's state is currently the authorized state"""

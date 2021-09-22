@@ -8,6 +8,7 @@ import asyncio
 from typing import Tuple
 from core.processors.processor_base import ProcessorBase
 from core.processors.chat_processor import chat_processor
+from core.processors.movement_processor import movement_processor
 from core.templates import get_template
 from core.user import User
 
@@ -66,16 +67,16 @@ class CommandProcessor(ProcessorBase):
         while not self.__shutdown:
             user, message = await self._consume()
 
-            command = message.partition(' ')[0]
+            command, _, _ = message.partition(' ')
 
             # TODO: test for keys existence, otherwise, send user command does not exist
-            if command not in _command_map:
+            if command.lower() not in _command_map:
                 user.socket.write((await get_template('system', 'invalid_command') % command).encode('ascii'))
                 await user.socket.drain()
 
                 continue
 
-            await _command_map[command].process(user, message)
+            await _command_map[command.lower()].process(user, message)
 
             self.__queue.task_done()
 
@@ -104,6 +105,24 @@ _command_map = {
     '/gos': chat_processor,
     '/gossip': chat_processor,
     '/tell': chat_processor,
+    'n': movement_processor,
+    'north': movement_processor,
+    's': movement_processor,
+    'south': movement_processor,
+    'e': movement_processor,
+    'east': movement_processor,
+    'w': movement_processor,
+    'west': movement_processor,
+    'nw': movement_processor,
+    'northwest': movement_processor,
+    'ne': movement_processor,
+    'northeast': movement_processor,
+    'se': movement_processor,
+    'southeast': movement_processor,
+    'sw': movement_processor,
+    'southwest': movement_processor,
+    'l': movement_processor,
+    'look': movement_processor,
 }
 
 # Create instance of CommandProcessor in module namespace
